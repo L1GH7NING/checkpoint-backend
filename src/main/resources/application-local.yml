@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/checkpoint
+    username: postgres
+    password: root
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+
+app:
+  jwt:
+    secret: 1a475e01-1bc4-4edf-8d9f-84376e6ad814
+  cors:
+    allowed-origins: http://localhost:3000,http://10.0.2.2:8080
+
+igdb:
+  client-id: ${IGDB_CLIENT_ID}
+  client-secret: ${IGDB_CLIENT_SECRET}
