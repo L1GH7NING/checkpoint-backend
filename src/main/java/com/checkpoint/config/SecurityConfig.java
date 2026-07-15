@@ -29,7 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtFilter            jwtFilter;
+    private final JwtFilter jwtFilter;
     private final UserDetailsServiceImpl userDetailsService;
     private final SecurityErrorHandler securityErrorHandler;
 
