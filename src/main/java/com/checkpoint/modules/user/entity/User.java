@@ -1,11 +1,10 @@
-package com.checkpoint.modules.auth.entity;
+package com.checkpoint.modules.user.entity;
 
 import com.checkpoint.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -13,11 +12,6 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public class User extends BaseEntity {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
-//    @Column(updatable = false, nullable = false)
-//    private UUID id;
 
     @Column(nullable = false, unique = true, length = 30)
     private String username;
@@ -38,8 +32,9 @@ public class User extends BaseEntity {
     private String avatarUrl;
 
     @Column(name = "is_private")
-    private boolean isPrivate = false;
+    private Boolean isPrivate = false;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;  // soft delete
+
 }

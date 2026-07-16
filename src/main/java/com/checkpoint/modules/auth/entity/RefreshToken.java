@@ -1,5 +1,6 @@
 package com.checkpoint.modules.auth.entity;
 
+import com.checkpoint.modules.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

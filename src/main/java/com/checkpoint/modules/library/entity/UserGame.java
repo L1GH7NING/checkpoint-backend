@@ -2,7 +2,7 @@ package com.checkpoint.modules.library.entity;
 
 import com.checkpoint.common.BaseEntity;
 import com.checkpoint.modules.game.entity.Game;
-import com.checkpoint.modules.auth.entity.User;
+import com.checkpoint.modules.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

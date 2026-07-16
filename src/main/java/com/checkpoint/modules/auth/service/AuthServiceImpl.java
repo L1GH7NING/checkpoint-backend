@@ -4,6 +4,8 @@ import com.checkpoint.exception.AppException;
 import com.checkpoint.modules.auth.dto.*;
 import com.checkpoint.modules.auth.entity.*;
 import com.checkpoint.modules.auth.repository.*;
+import com.checkpoint.modules.user.entity.User;
+import com.checkpoint.modules.user.repository.UserRepository;
 import com.checkpoint.security.JwtProperties;
 import com.checkpoint.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -96,6 +99,30 @@ public class AuthServiceImpl implements AuthService {
                     rt.setRevoked(true);
                     // Optionally: revokeAllByUserId to log out all devices
                 });
+    }
+
+    @Override
+    public void changePassword(UUID userId, ChangePasswordRequest req) {
+        User user = userRepository.findById(userId)
+                .filter(u -> u.getDeletedAt() == null)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND,
+                        "USER_NOT_FOUND", "User not found"));
+
+        if (!passwordEncoder.matches(req.currentPassword(), user.getPasswordHash())) {
+            throw new AppException(HttpStatus.UNAUTHORIZED,
+                    "INVALID_CREDENTIALS", "Current password is incorrect");
+        }
+
+        user.setPasswordHash(passwordEncoder.encode(req.newPassword()));
+        userRepository.save(user);
+
+        // Log out every other session — force re-login with the new password
+        revokeAllTokensForUser(userId);
+    }
+
+    @Override
+    public void revokeAllTokensForUser(UUID userId) {
+        refreshTokenRepository.revokeAllByUserId(userId);
     }
 
     // --- private helpers ---

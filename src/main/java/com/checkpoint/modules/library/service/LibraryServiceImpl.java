@@ -1,7 +1,5 @@
 package com.checkpoint.modules.library.service;
 
-import com.checkpoint.modules.auth.entity.User;
-import com.checkpoint.modules.auth.repository.UserRepository;
 import com.checkpoint.modules.game.entity.Game;
 import com.checkpoint.modules.game.service.GameService;
 import com.checkpoint.modules.library.dto.LibraryDTOs.*;
@@ -12,6 +10,8 @@ import com.checkpoint.modules.library.exception.LibraryEntryNotFoundException;
 import com.checkpoint.modules.library.mapper.LibraryMapper;
 import com.checkpoint.modules.library.repository.UserGameRepository;
 import com.checkpoint.modules.library.repository.UserGameRepository.LibraryStatsProjection;
+import com.checkpoint.modules.user.entity.User;
+import com.checkpoint.modules.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +28,7 @@ import java.util.UUID;
 public class LibraryServiceImpl implements LibraryService {
 
     private final UserGameRepository userGameRepository;
-    private final UserRepository     userRepository;
+    private final UserRepository userRepository;
     private final GameService        gameService;
     private final LibraryMapper      libraryMapper;
 

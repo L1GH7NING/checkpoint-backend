@@ -1,6 +1,6 @@
-package com.checkpoint.modules.auth.repository;
+package com.checkpoint.modules.user.repository;
 
-import com.checkpoint.modules.auth.entity.User;
+import com.checkpoint.modules.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
