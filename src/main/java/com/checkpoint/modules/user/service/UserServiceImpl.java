@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException(userId));
 
         if (req.displayName() != null) {
-            user.setDisplayName(req.displayName());
+            user.setUsername(req.displayName());
         }
         if (req.bio() != null) {
             user.setBio(req.bio());
