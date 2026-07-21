@@ -66,6 +66,16 @@ public class ListController {
         return ResponseEntity.ok(ApiResponse.ok("List deleted", null));
     }
 
+    @DeleteMapping("/{listId}/games")
+    public ResponseEntity<ApiResponse<Void>> removeGames(
+            @AuthenticationPrincipal UserPrincipal principal,
+            @PathVariable UUID listId,
+            @Valid @RequestBody RemoveGamesFromListRequest request
+    ) {
+        int removed = listService.removeGamesFromList(principal.id(), listId, request.gameIds());
+        return ResponseEntity.ok(ApiResponse.ok(removed + " game(s) removed from list", null));
+    }
+
     // Browse a given user's lists — e.g. GET /api/v1/lists?userId=...
     @GetMapping
     public ResponseEntity<ApiResponse<List<ListSummaryResponse>>> getUserLists(

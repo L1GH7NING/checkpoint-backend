@@ -34,20 +34,12 @@ public class LibraryMapper {
     }
 
     private GameSummary toGameSummary(Game game) {
-        Integer releaseYear = null;
-        if (game.getFirstReleaseDate() != null) {
-            // IGDB stores first_release_date as Unix epoch seconds
-            releaseYear = LocalDate.ofInstant(
-                    Instant.ofEpochSecond(game.getFirstReleaseDate()), ZoneOffset.UTC
-            ).getYear();
-        }
-
         return new GameSummary(
                 game.getId(),
                 game.getIgdbId(),
                 game.getName(),
                 game.getCoverUrl(),
-                releaseYear
+                game.getFirstReleaseDate()
         );
     }
 }

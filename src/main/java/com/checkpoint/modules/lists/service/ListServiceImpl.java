@@ -131,12 +131,20 @@ public class ListServiceImpl implements ListService {
         return inserted.stream().map(listMapper::toItemResponse).toList();
     }
 
+    // ListServiceImpl.java
+    // ListServiceImpl.java
+    @Override
+    public int removeGamesFromList(UUID userId, UUID listId, List<UUID> gameIds) {
+        requireOwnedList(userId, listId);
+        List<UUID> deduped = gameIds.stream().distinct().toList();
+        return listItemRepository.deleteByListIdAndGameIdIn(listId, deduped);
+        // returns count actually removed — lets the controller report partial success
+        // (e.g. client asked to remove 5, only 3 were in the list)
+    }
+
     @Override
     public void removeGameFromList(UUID userId, UUID listId, UUID gameId) {
-        requireOwnedList(userId, listId);
-        listItemRepository.deleteByListIdAndGameId(listId, gameId);
-        // Note: leaves a gap in `position` values, which is fine — ordering by position
-        // ascending still works correctly. Positions are only compacted on reorder.
+        removeGamesFromList(userId, listId, List.of(gameId));
     }
 
     @Override

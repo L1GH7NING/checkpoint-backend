@@ -15,4 +15,5 @@ public interface ListService {
     List<ListItemResponse> addGamesToList(UUID userId, UUID listId, AddGamesToListRequest request);
     void removeGameFromList(UUID userId, UUID listId, UUID gameId);
     ListResponse reorderItems(UUID userId, UUID listId, ReorderListItemsRequest request);
+    int removeGamesFromList(UUID userId, UUID listId, List<UUID> gameIds);
 }

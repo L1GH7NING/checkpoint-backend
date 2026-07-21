@@ -2,6 +2,7 @@ package com.checkpoint.modules.lists.repository;
 
 import com.checkpoint.modules.lists.entity.ListItem;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -40,6 +41,11 @@ public interface ListItemRepository extends JpaRepository<ListItem, UUID> {
     Integer findMaxPosition(@Param("listId") UUID listId);
 
     void deleteByListIdAndGameId(UUID listId, UUID gameId);
+
+    // ListItemRepository.java
+    @Modifying
+    @Query("DELETE FROM ListItem li WHERE li.list.id = :listId AND li.game.id IN :gameIds")
+    int deleteByListIdAndGameIdIn(@Param("listId") UUID listId, @Param("gameIds") List<UUID> gameIds);
 
     void deleteByListId(UUID listId); // used when a list itself is deleted
 }

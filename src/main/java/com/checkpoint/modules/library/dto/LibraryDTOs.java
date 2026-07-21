@@ -114,7 +114,7 @@ public class LibraryDTOs {
             Long igdbId,
             String name,
             String coverUrl,
-            Integer releaseYear
+            Long releaseYear
     ) {}
 
     public record GameStatusResponse(
