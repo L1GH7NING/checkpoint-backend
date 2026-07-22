@@ -11,6 +11,7 @@ import com.checkpoint.modules.game.mapper.GameMapper;
 import com.checkpoint.modules.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional
+    @Cacheable(value = "searchCache", key = "#request")
     public List<GameSearchResponse> search(GameSearchRequest request) {
         List<IgdbGameDto> results = igdbClient.search(request);
         return results.stream()
@@ -44,6 +46,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional
+    @Cacheable(value = "gameDetails", key = "#igdbId")
     public GameResponse getByIgdbId(Long igdbId) {
         Game game = getOrFetch(igdbId);
         return gameMapper.toGameResponse(game);
@@ -51,6 +54,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional
+    @Cacheable(value = "popularGames", key = "#limit")
     public List<GameSearchResponse> fetchPopularGames(int limit) {
         List<IgdbGameDto> popularGames = igdbClient.fetchTrendingGames(limit);
         return popularGames.stream()
@@ -61,6 +65,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional
+    @Cacheable(value = "upcomingGames", key = "#limit + '-' + #offset")
     public List<GameSearchResponse> fetchTopUpcomingGames(int limit, int offset) {
         List<IgdbGameDto> upcomingGames = igdbClient.fetchTopUpcomingGames(limit, offset);
         return upcomingGames.stream()

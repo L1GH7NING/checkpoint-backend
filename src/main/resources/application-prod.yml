@@ -12,6 +12,11 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: false  # flip to true locally via application-local.yml
+  cache:
+    type: caffeine
+    cache-names: popularGames, upcomingGames, searchCache, libraryStats, gameDetails
+    caffeine:
+      spec: expireAfterWrite=4h,maximumSize=1000
 
 app:
   jwt:

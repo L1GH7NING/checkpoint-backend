@@ -15,8 +15,6 @@ import com.checkpoint.modules.game.dto.GameSearchRequest;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
