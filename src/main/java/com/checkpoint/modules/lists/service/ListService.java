@@ -16,4 +16,5 @@ public interface ListService {
     void removeGameFromList(UUID userId, UUID listId, UUID gameId);
     ListResponse reorderItems(UUID userId, UUID listId, ReorderListItemsRequest request);
     int removeGamesFromList(UUID userId, UUID listId, List<UUID> gameIds);
+    ListMembershipResponse getListMembership(UUID userId, Long igdbId);
 }

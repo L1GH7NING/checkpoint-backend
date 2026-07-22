@@ -48,4 +48,11 @@ public interface ListItemRepository extends JpaRepository<ListItem, UUID> {
     int deleteByListIdAndGameIdIn(@Param("listId") UUID listId, @Param("gameIds") List<UUID> gameIds);
 
     void deleteByListId(UUID listId); // used when a list itself is deleted
+
+    // add to ListItemRepository interface
+    @Query("""
+    SELECT li.list.id FROM ListItem li
+    WHERE li.list.user.id = :userId AND li.game.id = :gameId
+    """)
+    List<UUID> findListIdsByUserIdAndGameId(@Param("userId") UUID userId, @Param("gameId") UUID gameId);
 }

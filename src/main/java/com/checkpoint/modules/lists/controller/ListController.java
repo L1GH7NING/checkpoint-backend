@@ -129,4 +129,14 @@ public class ListController {
                 ApiResponse.ok(listService.reorderItems(principal.id(), listId, request))
         );
     }
+
+    @GetMapping("/membership")
+    public ResponseEntity<ApiResponse<ListMembershipResponse>> getListMembership(
+            @AuthenticationPrincipal UserPrincipal principal,
+            @RequestParam Long igdbId
+    ) {
+        return ResponseEntity.ok(
+                ApiResponse.ok(listService.getListMembership(principal.id(), igdbId))
+        );
+    }
 }

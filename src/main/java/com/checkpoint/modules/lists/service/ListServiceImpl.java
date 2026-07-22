@@ -173,6 +173,14 @@ public class ListServiceImpl implements ListService {
         return listMapper.toResponse(list, reordered, reordered.size());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public ListMembershipResponse getListMembership(UUID userId, Long igdbId) {
+        Game game = gameService.getOrFetch(igdbId);
+        List<UUID> listIds = listItemRepository.findListIdsByUserIdAndGameId(userId, game.getId());
+        return new ListMembershipResponse(listIds);
+    }
+
     // --- helpers ---
 
     /**
